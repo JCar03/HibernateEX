@@ -1,3 +1,5 @@
+import com.Juan.Employee;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -14,7 +16,7 @@ public class ManageEmployee {
         try {
             factory = new Configuration().configure().buildSessionFactory();
         } catch (Throwable ex) {
-            System.err.println("Failed to cteate sessionFactory object." + ex);
+            System.err.println("Failed to create sessionFactory object." + ex);
             throw new ExceptionInInitializerError(ex);
         }
 
@@ -41,7 +43,10 @@ public class ManageEmployee {
 
         try {
             tx = session.beginTransaction();
-            Employee employee = new Employee(fname, lname, salary);
+            Employee employee = new Employee();
+            employee.setFirstName(fname);
+            employee.setLastName(lname);
+            employee.setSalary(salary);
             employeeID = (Integer) session.save(employee);
             tx.commit();
         } catch (HibernateException e) {
